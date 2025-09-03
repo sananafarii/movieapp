@@ -1,8 +1,8 @@
 /* Base styles */
 :root {
 	color-scheme: dark;
-	--bg: #111216;
-	--bg-soft: #24272b;
+	--bg: var(--Background-Dark-Gray, #1B1C1F);
+	--bg-soft: var(--Background-Black, #242629);
 	--bg-elev: #1f2226;
 	--border: #2a2e33;
 	--text: rgba(255,255,255,0.92);
@@ -14,7 +14,7 @@
 
 html, body, #root { height: 100%; }
 
-body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Yekan Bakh', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; }
 
 /* Navbar */
 .navbar { background: var(--bg-soft); direction: rtl; }
