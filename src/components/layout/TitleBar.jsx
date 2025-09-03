@@ -1,6 +1,13 @@
 import { Save } from 'lucide-react'
 import imdbLogo from '../../assets/images/image 8.png'
 
+const PlayCircleIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2"/>
+    <path d="M10 8L16 12L10 16V8Z" fill="white"/>
+  </svg>
+)
+
 const QualityBadge = () => (
   <div className="qbadge">
     <div className="qbadge-top">1080</div>
@@ -24,13 +31,15 @@ const TitleBar = ({ titleFa, titleEn, year, rating = 4.5, votes = 10, quality = 
         {/* Center: season/episode (plain) + quality input + rating with stars */}
         <div className="titlebar-controls">
           <span className="plain-text">فصل {currentSeason} • قسمت {currentEpisode}</span>
+          <span className="inline-play"><PlayCircleIcon /></span>
 
-          <div className="select-field">
+          <div className="select-field rtl-icons">
             <select aria-label="quality" defaultValue={quality}>
               <option>1080p - webdl</option>
               <option>720p - webdl</option>
               <option>480p - webdl</option>
             </select>
+            <span className="select-check">✓</span>
             <span className="caret">▾</span>
           </div>
 

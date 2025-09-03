@@ -1,15 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import TitleBar from '../components/layout/TitleBar'
-
-const Star = ({ filled, onClick }) => (
-  <button onClick={onClick} className={`star ${filled ? 'filled' : ''}`} aria-label="rate">★</button>
-)
+import { Flame, Mic, Captions } from 'lucide-react'
 
 const PlayerPage = () => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [userRating, setUserRating] = useState(0)
 
   useEffect(() => {
     let ignore = false
@@ -45,46 +41,21 @@ const PlayerPage = () => {
       <TitleBar titleFa={data.title_fa} titleEn={data.title_en || data.title} year={data.year} rating={avgRating || 4.5} votes={(data.ratings || []).length} />
       <div className="page">
         <div className="grid">
-          {/* Main */}
-          <div className="main">
-            <div>
-              <div className="title-en">{data.title_en || data.title || ''}</div>
-              <div className="title-fa">{data.title_fa} {data.year ? `• ${data.year}` : ''}</div>
-            </div>
-
-            <div className="chips" style={{ marginTop: 12 }}>
-              {(data.ratings || []).map((r, idx) => (
-                <div className="chip" key={idx}>{r.source}: <strong style={{ marginRight: 6 }}>{r.value}</strong></div>
-              ))}
-              {avgRating && (
-                <div className="chip">میانگین: <strong style={{ marginRight: 6 }}>{avgRating}</strong></div>
-              )}
-            </div>
-
-            <div className="video" style={{ marginTop: 12 }}>
-              <img className="bg" src={data.cover || data.poster} alt="poster" />
-              <button className="play">▶</button>
-            </div>
-
-            <div className="user-rating" style={{ marginTop: 12 }}>
-              <span>امتیاز شما:</span>
-              {[1,2,3,4,5].map(n => (
-                <Star key={n} filled={n <= userRating} onClick={() => setUserRating(n)} />
-              ))}
-              {userRating > 0 && <span style={{ opacity: 0.7 }}> {userRating}/5</span>}
-            </div>
-          </div>
-
-          {/* Sidebar */}
-          <aside className="sidebar">
-            <h3 style={{ marginTop: 0 }}>قسمت‌ها</h3>
+          {/* Episodes list on the left */}
+          <aside className="sidebar info-panel">
             <div className="episodes">
               {(data.episodes || []).map((ep, i) => (
-                <div className="episode" key={i}>
+                <div className="episode info-item" key={i}>
+                  {/* جای عکس - خودتان ایمپورت کنید */}
                   <img src={ep.poster || data.poster} alt={ep.title} />
                   <div className="meta">
                     <div className="title">{ep.title}</div>
-                    {ep.number && <div className="num">قسمت {ep.number}</div>}
+                    <div className="num">فصل {ep.season || 1} • قسمت {ep.number || i + 1}</div>
+                    <div className="badges">
+                      <span className="badge badge-orange">پرطرفدار</span>
+                      <span className="badge badge-blue">زیرنویس</span>
+                      <span className="badge badge-green">دوبله</span>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -93,6 +64,30 @@ const PlayerPage = () => {
               )}
             </div>
           </aside>
+
+          {/* Main video on the right */}
+          <div className="main">
+            <div className="movie-section" dir="rtl">
+              <div className="video" style={{ marginTop: 12 }}>
+                {/* <video controls src="/path/to/video.mp4" style={{ width: '100%', height: '100%' }} /> */}
+                <img className="bg" src={data.cover || data.poster} alt="poster" />
+                <button className="play">▶</button>
+              </div>
+
+              {/* Actions aligned to video width, from the right */}
+              <div className="video-actions rtl-actions">
+                <button className="btn btn-samsung">پخش تلویزیون های سامسونگ</button>
+                <button className="btn btn-dark">پخش تلویزیون های قدیمی</button>
+                <button className="btn btn-dark">پخش تلویزیون های قدیمی</button>
+              </div>
+
+              <div className="problem-row">
+                <span className="problem-icon">❗</span>
+                <span className="problem-text">حین تماشا با مشکل جدی رو به رو شدید ؟</span>
+                <a href="#" className="problem-link"><strong>اعلام مشکل</strong></a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
