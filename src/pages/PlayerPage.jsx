@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import TitleBar from '../components/layout/TitleBar'
-import { Flame, Mic, Captions } from 'lucide-react'
+import VideoControls from '../components/layout/VideoControls'
+import { Flame, Captions, Mic } from 'lucide-react'
+import episode1 from '../assets/images/episode1.png'
+import episode2 from '../assets/images/episode2.png'
+import episode3 from '../assets/images/episode3.png'
+import episode4 from '../assets/images/episode4.png'
+import videoImg from '../assets/images/Video.png'
 
 const PlayerPage = () => {
   const [data, setData] = useState(null)
@@ -38,27 +44,47 @@ const PlayerPage = () => {
 
   return (
     <div>
-      <TitleBar titleFa={data.title_fa} titleEn={data.title_en || data.title} year={data.year} rating={avgRating || 4.5} votes={(data.ratings || []).length} />
+      <TitleBar titleFa="فیلم EL CAMINO" titleEn="فیلم ال کامینو" year={data.year} rating={avgRating || 4.5} votes={(data.ratings || []).length} />
       <div className="page">
         <div className="grid">
           {/* Episodes list on the left */}
           <aside className="sidebar info-panel">
             <div className="episodes">
-              {(data.episodes || []).map((ep, i) => (
-                <div className="episode info-item" key={i}>
-                  {/* جای عکس - خودتان ایمپورت کنید */}
-                  <img src={ep.poster || data.poster} alt={ep.title} />
-                  <div className="meta">
-                    <div className="title">{ep.title}</div>
-                    <div className="num">فصل {ep.season || 1} • قسمت {ep.number || i + 1}</div>
-                    <div className="badges">
-                      <span className="badge badge-orange">پرطرفدار</span>
-                      <span className="badge badge-blue">زیرنویس</span>
-                      <span className="badge badge-green">دوبله</span>
+              {(data.episodes || []).map((ep, i) => {
+             
+                const episodeImages = [
+                  episode1, 
+                  episode2,   
+                  episode3,  
+                  episode4,
+                ]
+                
+                const episodeTitles = [
+                  "فیلم EL CAMINO",
+                  "فیلم Love Lies Bleeding 2024", 
+                  "فیلم Love Lies Bleeding 2024",
+                  "متری شیش و نیم"
+                ]
+                
+                return (
+                  <div className="episode info-item" key={i}>
+                    <img src={episodeImages[i] || ep.poster || data.poster} alt={episodeTitles[i]} />
+                    <div className="meta">
+                      <div className="title">{episodeTitles[i]}</div>
+                      <div className="num">
+                        <span>فصل {ep.season || 1}</span>
+                        <span>•</span>
+                        <span>قسمت {ep.number || i + 1}</span>
+                      </div>
+                      <div className="badges">
+                        <span className="badge badge-orange"><Flame size={14} /></span>
+                        <span className="badge badge-blue"><Captions size={14} /> زیرنویس</span>
+                        <span className="badge badge-green"><Mic size={14} /> دوبله</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
               {(!data.episodes || data.episodes.length === 0) && (
                 <div style={{ opacity: 0.7 }}>قسمتی موجود نیست.</div>
               )}
@@ -67,26 +93,13 @@ const PlayerPage = () => {
 
           {/* Main video on the right */}
           <div className="main">
-            <div className="movie-section" dir="rtl">
+            <div className="movie-section">
               <div className="video" style={{ marginTop: 12 }}>
-                {/* <video controls src="/path/to/video.mp4" style={{ width: '100%', height: '100%' }} /> */}
-                <img className="bg" src={data.cover || data.poster} alt="poster" />
+                <img className="bg" src={videoImg} alt="VPN Video" />
                 <button className="play">▶</button>
               </div>
-
-              {/* Actions aligned to video width, from the right */}
-              <div className="video-actions rtl-actions">
-                <button className="btn btn-samsung">پخش تلویزیون های سامسونگ</button>
-                <button className="btn btn-dark">پخش تلویزیون های قدیمی</button>
-                <button className="btn btn-dark">پخش تلویزیون های قدیمی</button>
-              </div>
-
-              <div className="problem-row">
-                <span className="problem-icon">❗</span>
-                <span className="problem-text">حین تماشا با مشکل جدی رو به رو شدید ؟</span>
-                <a href="#" className="problem-link"><strong>اعلام مشکل</strong></a>
-              </div>
             </div>
+            <VideoControls />
           </div>
         </div>
       </div>
